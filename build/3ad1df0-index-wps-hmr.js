@@ -1,5 +1,8 @@
 webpackHotUpdate("index",{
 
+/***/ "./node_modules/@pixi/graphics/dist/esm/graphics.js":
+false,
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
@@ -11,17 +14,15 @@ webpackHotUpdate("index",{
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pixi_app__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @pixi/app */ "./node_modules/@pixi/app/dist/esm/app.js");
 /* harmony import */ var _pixi_display__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @pixi/display */ "./node_modules/@pixi/display/dist/esm/display.js");
-/* harmony import */ var _pixi_graphics__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @pixi/graphics */ "./node_modules/@pixi/graphics/dist/esm/graphics.js");
-/* harmony import */ var _pixi_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @pixi/core */ "./node_modules/@pixi/core/dist/esm/core.js");
-/* harmony import */ var _pixi_ticker__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @pixi/ticker */ "./node_modules/@pixi/ticker/dist/esm/ticker.js");
+/* harmony import */ var _pixi_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @pixi/core */ "./node_modules/@pixi/core/dist/esm/core.js");
+/* harmony import */ var _pixi_ticker__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @pixi/ticker */ "./node_modules/@pixi/ticker/dist/esm/ticker.js");
 // Import external dependencies.
 
 
 
+_pixi_core__WEBPACK_IMPORTED_MODULE_2__["Renderer"].registerPlugin('batch', _pixi_core__WEBPACK_IMPORTED_MODULE_2__["BatchRenderer"]);
 
-_pixi_core__WEBPACK_IMPORTED_MODULE_3__["Renderer"].registerPlugin('batch', _pixi_core__WEBPACK_IMPORTED_MODULE_3__["BatchRenderer"]);
-
-_pixi_app__WEBPACK_IMPORTED_MODULE_0__["Application"].registerPlugin(_pixi_ticker__WEBPACK_IMPORTED_MODULE_4__["TickerPlugin"]); // Parse or setup some options.
+_pixi_app__WEBPACK_IMPORTED_MODULE_0__["Application"].registerPlugin(_pixi_ticker__WEBPACK_IMPORTED_MODULE_3__["TickerPlugin"]); // Parse or setup some options.
 // This should ideally be externalised and be modified by a window object.
 
 var options = {
@@ -37,7 +38,7 @@ window.addEventListener('load', function (event) {
 
     var container = new _pixi_display__WEBPACK_IMPORTED_MODULE_1__["Container"]();
     app.stage.addChild(container);
-    var graphics = new _pixi_graphics__WEBPACK_IMPORTED_MODULE_2__["Graphics"]();
+    var graphics = new Graphics();
     graphics.beginFill(0xFFFF00);
     graphics.drawRect(0, 0, 100, 100);
     container.addChild(graphics);

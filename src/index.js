@@ -1,7 +1,6 @@
 // Import external dependencies.
 import { Application } from '@pixi/app';
 import { Container } from '@pixi/display';
-import { Graphics } from '@pixi/graphics';
 import { Renderer, BatchRenderer } from '@pixi/core';
 Renderer.registerPlugin( 'batch', BatchRenderer );
 
