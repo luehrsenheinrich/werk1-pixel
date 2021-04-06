@@ -1,0 +1,42 @@
+{
+  "name": "werk1-pixel",
+  "version": "0.0.1",
+  "description": "The package to provide the pixel logic for the WERK1",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "wp-scripts build --webpack-no-externals",
+    "check-engines": "wp-scripts check-engines",
+    "check-licenses": "wp-scripts check-licenses",
+    "format:js": "wp-scripts format-js",
+    "lint:css": "wp-scripts lint-style",
+    "lint:js": "wp-scripts lint-js",
+    "lint:md:docs": "wp-scripts lint-md-docs",
+    "lint:md:js": "wp-scripts lint-md-js",
+    "lint:pkg-json": "wp-scripts lint-pkg-json",
+    "packages-update": "wp-scripts packages-update",
+    "start": "wp-scripts start --webpack-no-externals",
+    "test:e2e": "wp-scripts test-e2e",
+    "test:unit": "wp-scripts test-unit-js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luehrsenheinrich/werk1-pixel.git"
+  },
+  "author": "",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/luehrsenheinrich/werk1-pixel/issues"
+  },
+  "homepage": "https://github.com/luehrsenheinrich/werk1-pixel#readme",
+  "devDependencies": {
+    "@wordpress/scripts": "^14.1.0",
+    "webpack-cli": "^4.6.0",
+    "webpack-dev-server": "^3.11.2",
+    "webpack-plugin-serve": "^1.4.1"
+  },
+  "dependencies": {
+    "@pixi/app": "^6.0.2",
+    "@pixi/display": "^6.0.2",
+    "@pixi/graphics": "^6.0.2"
+  }
+}
