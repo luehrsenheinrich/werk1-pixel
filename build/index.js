@@ -63,7 +63,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "fdb33b826acdc7d0b8a8";
+/******/ 	var hotCurrentHash = "1a31b232a65f335ecf87";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -25765,29 +25765,51 @@ function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflec
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 
+/**
+ * An object with some default parameters.
+ *
+ * @type {Object}
+ */
+
+var pixelDefaults = {
+  color: 0xFFFFFF
+};
 
 var W1Pixel = /*#__PURE__*/function (_Graphics) {
   _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2___default()(W1Pixel, _Graphics);
 
   var _super = _createSuper(W1Pixel);
 
-  function W1Pixel() {
+  /**
+   * Class constructor.
+   *
+   * @param {Number} x      The position of this pixel on the X axis.
+   * @param {Number} y      The position of this pixel on the Y axis.
+   * @param {Number} size   The size of this pixel in height and width.
+   * @param {Object} params An object of parameters.
+   */
+  function W1Pixel(x, y, size, params) {
     var _this;
 
     _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, W1Pixel);
 
-    _this = _super.call(this);
+    // Call the parent constructor.
+    _this = _super.call(this); // Define the parameters and its defaults.
 
-    _this.drawPixel();
+    _this.params = Object.assign({}, pixelDefaults, params);
 
+    _this.drawPixel(size);
+
+    _this.x = x;
+    _this.y = y;
     return _this;
   }
 
   _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(W1Pixel, [{
     key: "drawPixel",
-    value: function drawPixel() {
-      this.beginFill(0xFFFFFF);
-      this.drawRect(0, 0, 100, 100);
+    value: function drawPixel(size) {
+      this.beginFill(this.params.color, Math.random());
+      this.drawRect(0, 0, size, size);
     }
   }]);
 
@@ -25824,21 +25846,61 @@ _pixi_app__WEBPACK_IMPORTED_MODULE_0__["Application"].registerPlugin(_pixi_ticke
 // This should ideally be externalised and be modified by a window object.
 
 var options = {
-  selectorClassName: 'w1-pixel-stage'
+  selectorClassName: 'w1-pixel-stage',
+  pixelSize: 100,
+  // The default size of one pixel.
+  overflow: false,
+  // If we want to draw pixel over the edge of the stage.
+  vAlign: 'center',
+  // top, center, bottom
+  hAlign: 'center' // left, center, right
+
 }; // Stuff we want to do on load.
 
 window.addEventListener('load', function (event) {
   var elements = document.getElementsByClassName(options.selectorClassName);
   Array.from(elements).forEach(function (element) {
     // Generate the PIXI app and add it to the DOMElement.
-    var app = new _pixi_app__WEBPACK_IMPORTED_MODULE_0__["Application"]();
+    var app = new _pixi_app__WEBPACK_IMPORTED_MODULE_0__["Application"]({
+      resizeTo: element
+    });
     element.appendChild(app.view); // Generate a pixi container to draw in.
 
     var container = new _pixi_display__WEBPACK_IMPORTED_MODULE_1__["Container"]();
-    app.stage.addChild(container);
-    var graphics = new _inc_pixel__WEBPACK_IMPORTED_MODULE_4__["default"]();
-    container.addChild(graphics);
-    console.log(element);
+    app.stage.addChild(container); // how many pixel can we stuff on the x axis?
+
+    var xAmt = app.renderer.view.width / options.pixelSize;
+    var yAmt = app.renderer.view.height / options.pixelSize; // Floor or ceil the amounts depending on if we want overflow or not.
+
+    if (options.overflow) {
+      xAmt = Math.ceil(xAmt);
+      yAmt = Math.ceil(yAmt);
+    } else {
+      xAmt = Math.floor(xAmt);
+      yAmt = Math.floor(yAmt);
+    } // Draw the pixel and add it to the container.
+
+
+    for (var y = 0; y < yAmt; y++) {
+      for (var x = 0; x < xAmt; x++) {
+        var graphics = new _inc_pixel__WEBPACK_IMPORTED_MODULE_4__["default"](x * options.pixelSize, y * options.pixelSize, options.pixelSize);
+        container.addChild(graphics);
+      }
+    } // Calculate and modify the vertial alignment
+
+
+    if (options.vAlign === 'center') {
+      container.y = (app.renderer.view.height - container.height) / 2;
+    } else if (options.vAlign === 'bottom') {
+      container.y = app.renderer.view.height - container.height;
+    } // Calculate and modify the horizontal alignment
+
+
+    if (options.hAlign === 'center') {
+      container.x = (app.renderer.view.width - container.width) / 2;
+    } else if (options.hAlign === 'right') {
+      container.x = app.renderer.view.width - container.width;
+    }
   });
 });
 
