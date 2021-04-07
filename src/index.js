@@ -1,20 +1,14 @@
 // Import external dependencies.
-import { Application } from '@pixi/app';
-import { Container } from '@pixi/display';
-import { Renderer, BatchRenderer } from '@pixi/core';
-Renderer.registerPlugin( 'batch', BatchRenderer );
-
-import { TickerPlugin } from '@pixi/ticker';
-Application.registerPlugin(TickerPlugin);
+import * as PIXI from './pixi.js';
 
 // Import internal dependencies.
-import W1Pixel from './inc/pixel'
+import W1Pixel from './inc/pixel';
 
 // Parse or setup some options.
 // This should ideally be externalised and be modified by a window object.
 const options = {
 	selectorClassName: 'w1-pixel-stage',
-	pixelSize: 100, // The default size of one pixel.
+	pixelSize: 20, // The default size of one pixel.
 	overflow: false, // If we want to draw pixel over the edge of the stage.
 	vAlign: 'center', // top, center, bottom
 	hAlign: 'center', // left, center, right
@@ -25,13 +19,14 @@ window.addEventListener( 'load', function( event ) {
 	const elements = document.getElementsByClassName( options.selectorClassName );
 	Array.from( elements ).forEach( ( element ) => {
 		// Generate the PIXI app and add it to the DOMElement.
-		const app = new Application( {
-			resizeTo: element
+		const app = new PIXI.Application( {
+			resizeTo: element,
+			backgroundAlpha: 0,
 		} );
 		element.appendChild( app.view );
 
 		// Generate a pixi container to draw in.
-		const container = new Container();
+		const container = new PIXI.Container();
 		app.stage.addChild(container);
 
 		// how many pixel can we stuff on the x axis?

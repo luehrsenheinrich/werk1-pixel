@@ -1,4 +1,4 @@
-import { Graphics } from '@pixi/graphics';
+import * as PIXI from './../pixi.js';
 
 /**
  * An object with some default parameters.
@@ -9,7 +9,7 @@ const pixelDefaults = {
 	color: 0xFFFFFF,
 }
 
-export default class W1Pixel extends Graphics {
+export default class W1Pixel extends PIXI.Graphics {
 
 	/**
 	 * Class constructor.
