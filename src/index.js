@@ -7,6 +7,9 @@ Renderer.registerPlugin( 'batch', BatchRenderer );
 import { TickerPlugin } from '@pixi/ticker';
 Application.registerPlugin(TickerPlugin);
 
+// Import internal dependencies.
+import W1Pixel from './inc/pixel'
+
 // Parse or setup some options.
 // This should ideally be externalised and be modified by a window object.
 const options = {
@@ -25,10 +28,7 @@ window.addEventListener( 'load', function( event ) {
 		const container = new Container();
 		app.stage.addChild(container);
 
-		const graphics = new Graphics();
-
-		graphics.beginFill(0xFFFF00);
-		graphics.drawRect(0, 0, 100, 100);
+		const graphics = new W1Pixel();
 		container.addChild(graphics);
 
 
