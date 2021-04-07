@@ -1,6 +1,6 @@
 {
   "name": "werk1-pixel",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "The package to provide the pixel logic for the WERK1",
   "main": "src/index.js",
   "scripts": {
