@@ -1,3 +1,9 @@
+/**
+ * Define the pixi dependencies.
+ *
+ * @see https://pixijs.io/customize/
+ */
+
 export * from '@pixi/constants';
 export * from '@pixi/math';
 export * from '@pixi/runner';
@@ -9,11 +15,14 @@ export * from '@pixi/display';
 export * from '@pixi/core';
 export * from '@pixi/app';
 export * from '@pixi/graphics';
+export * from '@pixi/interaction';
 
 // Renderer plugins
 import { Renderer } from '@pixi/core';
 import { BatchRenderer } from '@pixi/core';
 Renderer.registerPlugin('batch', BatchRenderer);
+import { InteractionManager } from '@pixi/interaction';
+Renderer.registerPlugin('interaction', InteractionManager);
 
 // Application plugins
 import { Application } from '@pixi/app';

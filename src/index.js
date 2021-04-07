@@ -1,5 +1,6 @@
 // Import external dependencies.
 import * as PIXI from './pixi.js';
+import TWEEN from '@tweenjs/tween.js';
 
 // Import internal dependencies.
 import W1Pixel from './inc/pixel';
@@ -8,7 +9,7 @@ import W1Pixel from './inc/pixel';
 // This should ideally be externalised and be modified by a window object.
 const options = {
 	selectorClassName: 'w1-pixel-stage',
-	pixelSize: 20, // The default size of one pixel.
+	pixelSize: 200, // The default size of one pixel.
 	overflow: false, // If we want to draw pixel over the edge of the stage.
 	vAlign: 'center', // top, center, bottom
 	hAlign: 'center', // left, center, right
@@ -18,6 +19,8 @@ const options = {
 window.addEventListener( 'load', function( event ) {
 	const elements = document.getElementsByClassName( options.selectorClassName );
 	Array.from( elements ).forEach( ( element ) => {
+		element.classList.add( options.selectorClassName + '-loading' );
+
 		// Generate the PIXI app and add it to the DOMElement.
 		const app = new PIXI.Application( {
 			resizeTo: element,
@@ -63,5 +66,13 @@ window.addEventListener( 'load', function( event ) {
 		} else if ( options.hAlign === 'right' ) {
 			container.x = (app.renderer.view.width - container.width);
 		}
+
+		element.classList.remove( options.selectorClassName + '-loading' );
+		element.classList.add( options.selectorClassName + '-loaded' );
+	} );
+
+	const ticker = PIXI.Ticker.shared;
+	ticker.add( () => {
+		TWEEN.update();
 	} );
 });

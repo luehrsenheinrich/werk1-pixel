@@ -36,7 +36,16 @@
   },
   "dependencies": {
     "@pixi/app": "^6.0.2",
+    "@pixi/constants": "^6.0.2",
+    "@pixi/core": "^6.0.2",
     "@pixi/display": "^6.0.2",
-    "@pixi/graphics": "^6.0.2"
+    "@pixi/graphics": "^6.0.2",
+    "@pixi/interaction": "^6.0.2",
+    "@pixi/math": "^6.0.2",
+    "@pixi/runner": "^6.0.2",
+    "@pixi/settings": "^6.0.2",
+    "@pixi/ticker": "^6.0.2",
+    "@pixi/utils": "^6.0.2",
+    "@tweenjs/tween.js": "^18.6.4"
   }
 }
