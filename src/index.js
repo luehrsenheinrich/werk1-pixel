@@ -1,37 +1,24 @@
-// Import external dependencies.
-import * as PIXI from './pixi.js';
 import TWEEN from '@tweenjs/tween.js';
 
 // Import internal dependencies.
+import W1Stage from './inc/stage';
 import W1Pixel from './inc/pixel';
 
 // Parse or setup some options.
 // This should ideally be externalised and be modified by a window object.
 const options = {
 	selectorClassName: 'w1-pixel-stage',
-	pixelSize: 200, // The default size of one pixel.
-	overflow: false, // If we want to draw pixel over the edge of the stage.
-	vAlign: 'center', // top, center, bottom
-	hAlign: 'center', // left, center, right
 }
 
 // Stuff we want to do on load.
 window.addEventListener( 'load', function( event ) {
 	const elements = document.getElementsByClassName( options.selectorClassName );
+	const stages = [];
 	Array.from( elements ).forEach( ( element ) => {
 		element.classList.add( options.selectorClassName + '-loading' );
+		stages.push( new W1Stage( element ) );
 
-		// Generate the PIXI app and add it to the DOMElement.
-		const app = new PIXI.Application( {
-			resizeTo: element,
-			backgroundAlpha: 0,
-		} );
-		element.appendChild( app.view );
-
-		// Generate a pixi container to draw in.
-		const container = new PIXI.Container();
-		app.stage.addChild(container);
-
+		/*
 		// how many pixel can we stuff on the x axis?
 		let xAmt =  app.renderer.view.width / options.pixelSize;
 		let yAmt =  app.renderer.view.height / options.pixelSize;
@@ -66,13 +53,24 @@ window.addEventListener( 'load', function( event ) {
 		} else if ( options.hAlign === 'right' ) {
 			container.x = (app.renderer.view.width - container.width);
 		}
-
+		*/
 		element.classList.remove( options.selectorClassName + '-loading' );
 		element.classList.add( options.selectorClassName + '-loaded' );
 	} );
 
-	const ticker = PIXI.Ticker.shared;
-	ticker.add( () => {
-		TWEEN.update();
-	} );
+	// Start a custom game loop.
+	let lastRender = 0;
+	const step = ( time ) => {
+		var deltaTime = time - lastRender;
+		lastRender = time;
+
+		// Update and render the stages.
+		stages.forEach( ( stage ) => {
+			stage.step( deltaTime );
+		});
+
+		window.requestAnimationFrame( step );
+	};
+	window.requestAnimationFrame( step );
+
 });

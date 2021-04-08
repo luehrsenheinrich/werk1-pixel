@@ -1,4 +1,3 @@
-import * as PIXI from './../pixi.js';
 import TWEEN from '@tweenjs/tween.js';
 
 /**
@@ -7,7 +6,9 @@ import TWEEN from '@tweenjs/tween.js';
  * @type {Object}
  */
 const pixelDefaults = {
-	color: 0xFFFFFF,
+	color: '#ffffff',
+	ctx: false,
+	tweenGroup: false,
 }
 
 /**
@@ -21,7 +22,7 @@ const getRandomIntInclusive = (min, max) => {
   return Math.floor(Math.random() * (max - min +1)) + min;
 }
 
-export default class W1Pixel extends PIXI.Graphics {
+export default class W1Pixel {
 
 	/**
 	 * Class constructor.
@@ -32,18 +33,11 @@ export default class W1Pixel extends PIXI.Graphics {
 	 * @param {Object} params An object of parameters.
 	 */
 	constructor(x, y, size, params) {
-		// Call the parent constructor.
-		super();
-
 		// Define the parameters and its defaults.
 		this.params = Object.assign({}, pixelDefaults, params);
 
 		// Define the pixel size
 		this.pixelSize = size;
-		this.interactive = true;
-
-		// Draw the pixel
-		this.drawPixel();
 
 		// Position the pixel
 		this.x = x;
@@ -53,27 +47,22 @@ export default class W1Pixel extends PIXI.Graphics {
 		this.delay = this.duration * ( getRandomIntInclusive(0, 100) / 50 );
 
 		// Define the main tween
-		this.mainTween = new TWEEN.Tween(this);
+		this.mainTween = new TWEEN.Tween(this, this.params.tweenGroup);
 		this.mainTween.to({alpha: 0}, this.duration);
 		this.mainTween.repeat(Infinity);
 		this.mainTween.yoyo(true);
 		this.mainTween.delay(this.delay);
 		this.mainTween.repeatDelay(0);
 		this.mainTween.easing(TWEEN.Easing.Cubic.InOut)
-		this.mainTween.onUpdate((object) => {
-			this.updateTween(object);
-		});
 		this.mainTween.onStart(() => {
 			this.currentTween = this.mainTween;
 		});
+		this.mainTween.start();
 
 		// Define the hover tween
 		this.hoverTween = new TWEEN.Tween(this);
 		this.hoverTween.to({alpha: 0}, this.duration * 2);
 		this.hoverTween.easing(TWEEN.Easing.Cubic.InOut)
-		this.hoverTween.onUpdate((object) => {
-			this.updateTween(object);
-		});
 		this.hoverTween.onStart((tween) => {
 			this.currentTween = this.hoverTween;
 		});
@@ -81,28 +70,19 @@ export default class W1Pixel extends PIXI.Graphics {
 			this.mainTween.start();
 		});
 
-		this.fade();
-
-		// Hover events
-		this.on( 'pointerover', function() {
-			this.currentTween.stop();
-			this.alpha = 1;
-			this.hoverTween.start();
-		});
+		this.render();
 	}
 
-	drawPixel() {
-		this.clear();
-		this.beginFill(this.params.color);
-		this.drawRect(0, 0, this.pixelSize, this.pixelSize);
-	}
+	render() {
 
-	updateTween( object ) {
-		this.alpha = object.alpha;
-	}
+		this.params.ctx.globalAlpha = this.alpha;
+		this.params.ctx.fillStyle = this.params.color;
+		this.params.ctx.fillRect(
+			this.x,
+			this.y,
+			this.pixelSize,
+			this.pixelSize
+		);
 
-	fade() {
-		this.mainTween.start();
-		this.currentTween = this.mainTween;
 	}
 }
