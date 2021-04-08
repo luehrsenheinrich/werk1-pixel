@@ -43,7 +43,7 @@ export default class W1Pixel {
 		this.x = x;
 		this.y = y;
 		this.alpha = Math.random();
-		this.duration = 5000 * ( getRandomIntInclusive(50, 100) / 100 );
+		this.duration = 10000 * ( getRandomIntInclusive(50, 100) / 100 );
 		this.delay = this.duration * ( getRandomIntInclusive(0, 100) / 50 );
 
 		// Define the main tween

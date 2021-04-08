@@ -59,10 +59,23 @@ textarea {
 .w1-pixel-stage {
   width: 100%;
   height: 25vh;
+  margin: 0 auto;
   background-image: url(https://unsplash.it/640/360);
   background-position: center center;
   background-size: cover;
   margin-bottom: 50px;
+}
+
+.w1-pixel-stage.half {
+  width: 50%;
+}
+
+.w1-pixel-stage.third {
+  width: 33%;
+}
+
+.w1-pixel-stage.double-height {
+  height: 50vh;
 }
 
 .w1-pixel-stage canvas {
